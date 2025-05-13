@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualización Interactiva</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Visualización Interactiva</h1>
+    <div id="plot"></div>
+    <script>
+        // Verifica si Flask envió el gráfico como JSON
+        const graphJSON = {{ graph_json | tojson | safe }};
+        if (graphJSON) {
+            const plotData = JSON.parse(graphJSON);
+            Plotly.newPlot('plot', plotData.data, plotData.layout);
+        } else {
+            document.getElementById('plot').innerHTML = '<p>No hay datos disponibles para mostrar.</p>';
+        }
+    </script>
+</body>
+</html>
